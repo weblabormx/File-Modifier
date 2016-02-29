@@ -1,5 +1,5 @@
 <?php
-namespace FileModifier;
+namespace WeblaborMX\FileModifier;
 
 class FileModifier {
 	static private $file;

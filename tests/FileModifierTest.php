@@ -1,8 +1,7 @@
 <?php
-namespace FileModifier;
-include 'src/fileModifier.class.php';
-include 'src/helper.class.php';
-
+use \WeblaborMX\FileModifier\FileModifier;
+include_once 'src/fileModifier.class.php';
+include_once 'src/helper.class.php';
 
 class FileModifierTest extends \PHPUnit_Framework_TestCase {
 

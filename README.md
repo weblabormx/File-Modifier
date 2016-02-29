@@ -17,11 +17,13 @@ PHP Package for modifing single files. With this package you would have the posi
 ### Basics
 First to use the package you will need to add the namespace:
 ```php
-namespace FileModifier;
+use \WeblaborMX\FileModifier\FileModifier;
+use \WeblaborMX\FileModifier\Helper;
 ```
 To edit a file you will need to call FileModifier and the direction of the file to edit.
 ```php
 FileModifier::file('file.php');
+```
 
 We need the function `execute()` to execute the modifications.
 ```php
@@ -128,3 +130,13 @@ FileModifier::file('file.php')
 	->execute();
 ```
 It returns an array with all the actions made.
+## Helper Class
+The Helper Class has functions that helps with the programming.
+```php
+// To search if begins with a select string
+Helper::startsWith( 'hola-mundo.php', 'hola' )  // true
+// If ends with some string
+Helper::endsWith( 'hola-mundo.php', '.php' )    // true
+// If has string
+Helper::hasString( 'hola-mundo.php', 'mundo' )  // true
+```
