@@ -15,10 +15,14 @@ PHP Package for modifing single files. With this package you would have the posi
 ## Documentation
 
 ### Basics
+First to use the package you will need to add the namespace:
+```php
+namespace FileModifier;
+```
 To edit a file you will need to call FileModifier and the direction of the file to edit.
 ```php
 FileModifier::file('file.php');
-```
+
 We need the function `execute()` to execute the modifications.
 ```php
 ->execute();        // It will modify the file
@@ -121,6 +125,6 @@ FileModifier::file('file.php')
 	->replace("user","usuario1")
 	->addBeforeLine("florencio","beforeflorencio, nada") 
 	->addAtTheEnd("Copyright") 
-	->execute(false);
+	->execute();
 ```
 It returns an array with all the actions made.
