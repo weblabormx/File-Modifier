@@ -1,7 +1,7 @@
 <?php
 use \WeblaborMX\FileModifier\Helper;
-include_once 'src/fileModifier.class.php';
-include_once 'src/helper.class.php';
+include_once 'src/FileModifier.php';
+include_once 'src/Helper.php';
 
 class HelperTest extends \PHPUnit_Framework_TestCase {
 
