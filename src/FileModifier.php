@@ -18,18 +18,7 @@ class FileModifier {
 		self::$pointer = new self;
 		return self::$pointer;
 	}
-	/*
-	Use with an array
-	----------------------------------
-	$search = array("pay_sms","bogof");
-	$analyzeFile = new analyzeFile($file);
-	$found = $analyzeFile->find($search);
 
-	Use with a string
-	----------------------------------
-	$analyzeFile = new analyzeFile("offer_msg");
-	$found = $analyzeFile->find($search);
-	*/
 	function findAndReplace($search, $type, $val2 = "", $asincrono=false, $lines=false, $pos=false) {
 		self::$searchedWords = array();
 		if ($asincrono==false) {
@@ -385,7 +374,7 @@ class FileModifier {
 		return array("starts"=>0, "finish"=>0);
 	}
 
-	function getEndLine() {
+	function count() {
 		$archivo = self::$file;
 		$handle = fopen($archivo, "r");
 		if ($handle) { // process the line read.
@@ -523,6 +512,10 @@ class FileModifier {
 		$res["val6"] = false;
 		self::$waitFunctions[] = $res;
 		return self::$pointer;
+	}
+
+	function exists() {
+		return file_exists(self::$file);
 	}
 
 	// Used to speed, all the changes will do it reading only one time

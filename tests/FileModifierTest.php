@@ -165,9 +165,9 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testGetEndLine() {
+	public function testCount() {
 
-		$res = FileModifier::file($this->file)->getEndLine();
+		$res = FileModifier::file($this->file)->count();
 	    $this->assertEquals( $res, 28 );
 
 	}
@@ -219,6 +219,12 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $this->assertEquals( $res['starts'], 18 );
 	    $this->assertEquals( $res['finish'], 20 );
 
+	}
+
+	public function testFileExists() {
+		$this->assertTrue( FileModifier::file($this->file)->exists() );
+		$this->assertTrue( FileModifier::file('composer.json')->exists() );
+		$this->assertFalse( FileModifier::file('holamundo.php')->exists() );
 	}
 
 	public function tearDown() {

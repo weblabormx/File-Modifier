@@ -44,10 +44,15 @@ $return = FileModifier::file('file.php')->find($search)->execute();
 ```
 ##### Returns
 Returns an array with the number of gotten results, each result with the number of line and the actual content of the line.
-#### Get The End Line
-To get the number of the end line. Returns a number.
+#### A File exists
+To check if a file exists you should execute the next code. Returns a boolean.
 ```php
-FileModifier::file('file.php')->getEndLine();
+$exists = FileModifier::file('file.php')->exists();
+```
+#### Count number of lines
+To get the total lines or number of the end line. Returns a number.
+```php
+FileModifier::file('file.php')->count();
 ```
 #### Get the line of a search
 if you want to know the line where `user` appears you need to use:
