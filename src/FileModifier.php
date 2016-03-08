@@ -312,13 +312,16 @@ class FileModifier {
 			    while (($liness = fgets($handle)) !== false) {
 			    	$numline++;
 			    	if ($numline==$line) {
-			    		$spac = explode("function", $liness);
+			    		$firstText = explode(' ', trim($liness)); // Get the first text of the sentence
+			    		$spac = explode($firstText[0], $liness); // Get the space between first word and the begining
 						$spac = $spac[0];
+						
 			    	}
 			    	if ($numline<$line) {
 			    		continue;
 			    	}
 		    		//echo "[$numline] => $liness\n";
+		    		$finishLine = 0;
 			    	if (Helper::startsWith($liness, "$spac}")) {
 			    		$finishLine = $numline;
 			    		//echo "Entra";
