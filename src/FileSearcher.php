@@ -1,7 +1,7 @@
 <?php
 namespace WeblaborMX\FileModifier;
 
-class AnalyzeFilesGetFiles {
+class FileSearcher {
 
 	private $rutas = array();
 

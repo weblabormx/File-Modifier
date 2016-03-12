@@ -19,17 +19,13 @@ class AnalyzeFilesRules {
 
 	static function create($function) {
 		$function(self::$pointer);
-		return self::finish();
+		return self::$results;
 	}
 
 	static function add($function) {
 		$singlerule = new AnalyzeFilesSingleRule(self::$directory);
 		$function($singlerule);
 		self::$results = array_merge(self::$results, $singlerule->getResults());
-	}
-
-	static function finish() {
-		return self::$results;
 	}
 
 }

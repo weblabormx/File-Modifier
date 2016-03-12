@@ -135,6 +135,19 @@ FileModifier::file('file.php')
 	->execute();
 ```
 It returns an array with all the actions made.
+#### Return example
+```php
+array(
+	0 => array(
+		'action'	=> 'replace',
+		'lineNum'	=> 1,
+		'lineOld'	=> 'user1,pass1',
+		'lineNew'	=> 'usuario11,pass1',
+		'search'	=> 'user',
+		'val2'		=> 'usuario1'
+	)
+);
+```
 ## Helper Class
 The Helper Class has functions that helps with the programming.
 ```php
@@ -145,7 +158,55 @@ Helper::endsWith( 'hola-mundo.php', '.php' );    // true
 // If has string
 Helper::hasString( 'hola-mundo.php', 'mundo' );  // true
 ```
-## Analyze Files
+## Analyze Files - Execute
+This class helps you to make changes in an specified file. You can use functions from `FileModifier` function.
+### Basic example
+```php
+ $results = AnalyzeFiles::directory($this->directory)->execute(function($file) {
+    $file->fileIs('sub1/sub1.php');
+    $file->action(function($action) {
+        $action->whereNoSearch('Carlos');
+        $action->whereSearch('Jorge');
+        $action->replace('Jorge', 'Carlos');
+    });
+    $file->action(function($action) {
+        $action->whereSearch('Example1');
+        $action->replace('Hi', 'Bye');
+    });
+}); // For no executing
+```
+### Returned array
+```php
+$result = array(
+    'sub1/sub1.php' => array( // File name
+        0 => array( // Number of action
+            'result'        => true,
+            'requirements'  => array(
+                0 => array(
+                    'function'    => 'NoSearch',
+                    'value'       => 'Carlos',
+                    'result'      => true
+                ), 1 => array(
+                    'function'    => 'Search',
+                    'value'       => 'Jorge',
+                    'result'      => true
+                )
+            ),
+            'results' => array(
+                0 => array(
+                    'action'    => 'replace',
+                    'lineNum'   => 1,
+                    'lineOld'   => 'user1,pass1',
+                    'lineNew'   => 'usuario11,pass1',
+                    'search'    => 'user',
+                    'val2'      => 'usuario1'
+                )
+            )
+        )
+    )
+);
+```
+## Analyze Files - Rules
 This class will help you to know if some rules are being successfull or not.
 ### Basic example
 ```php
@@ -201,9 +262,12 @@ $data->fileEndsWith('.php');    // To search in all php files
 $data->files(array('example1.php','example2.php')); // Select the names
 ```
 ### About validation 
+`$count` is opcional, by default it will return true if appears at least once.
 ```php
-$validation->whereSearch('Carlos'); // Check if exists 'Carlos' in the file, return a boolean
-$validation->whereSearch('Carlos', 2); // Check that 'Carlos' is twice in the file
+// Check if exists 'Carlos' in the file, return a boolean
+$validation->whereSearch('Carlos', $count); 
+// Only when doesn't exist 'Carlos'
+$validation->whereNoSearch('Carlos', $count);
 ```
 ### Return example
 ```php

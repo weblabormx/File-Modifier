@@ -1,6 +1,6 @@
 <?php
 use \WeblaborMX\FileModifier\Helper;
-include_once 'src/Helper.php';
+include_once 'tests/loader.php';
 
 class HelperTest extends \PHPUnit_Framework_TestCase {
 

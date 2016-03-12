@@ -1,6 +1,6 @@
 <?php
 use \WeblaborMX\FileModifier\FileModifier;
-include_once 'src/FileModifier.php';
+include_once 'tests/loader.php';
 
 class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
@@ -151,6 +151,20 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $this->assertEquals( count($found), 1 );
 
 	}
+
+	// Example of return
+	/*
+		array(
+			0 => array(
+				'action'	=> 'replace',
+				'lineNum'	=> 1,
+				'lineOld'	=> 'user1,pass1',
+				'lineNew'	=> 'usuario11,pass1',
+				'search'	=> 'user',
+				'val2'		=> 'usuario1'
+			)
+		);
+	*/ 
 
 	public function testMultiple() {
 

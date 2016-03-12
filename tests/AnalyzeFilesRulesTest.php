@@ -1,12 +1,6 @@
 <?php
 use \WeblaborMX\FileModifier\AnalyzeFiles;
-include_once 'src/AnalyzeFiles.php';
-include_once 'src/AnalyzeFilesRules.php';
-include_once 'src/AnalyzeFilesSingleRule.php';
-include_once 'src/AnalyzeFilesSingleRuleValidation.php';
-include_once 'src/AnalyzeFilesGetFiles.php';
-include_once 'src/FileModifier.php';
-include_once 'src/Helper.php';
+include_once 'tests/loader.php';
 
 class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
 
@@ -37,7 +31,6 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
 	    			$validation->whereSearch('Carlos', $count); 
 	    			$validation->whereSearch('Example1'); // Without $count only search that the search exists minimum once
     			});
-    			
     		});
     		$rules->add(function($data) {
     			$data->fileIs('example2.php');
