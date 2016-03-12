@@ -1,6 +1,6 @@
 <?php
 use \WeblaborMX\FileModifier\FileModifier;
-include_once 'src/FileModifier.php';
+include_once 'tests/loader.php';
 
 class BugsTest extends \PHPUnit_Framework_TestCase {
 
