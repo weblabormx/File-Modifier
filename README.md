@@ -139,9 +139,76 @@ It returns an array with all the actions made.
 The Helper Class has functions that helps with the programming.
 ```php
 // To search if begins with a select string
-Helper::startsWith( 'hola-mundo.php', 'hola' )  // true
+Helper::startsWith( 'hola-mundo.php', 'hola' );  // true
 // If ends with some string
-Helper::endsWith( 'hola-mundo.php', '.php' )    // true
+Helper::endsWith( 'hola-mundo.php', '.php' );    // true
 // If has string
-Helper::hasString( 'hola-mundo.php', 'mundo' )  // true
+Helper::hasString( 'hola-mundo.php', 'mundo' );  // true
+```
+## Analyze Files
+This class will help you to know if some rules are being successfull or not.
+### Basic example
+```php
+$results = AnalyzeFiles::rules()->directory($this->directory)->create(function($rules) {
+	$rules->add(function($data) {
+		$data->fileIs('example1.php');
+		$data->validation(function($validation) {
+			$count = 1;
+			$validation->whereSearch('Carlos', $count); 
+			$validation->whereSearch('Example1'); // Without $count only search that the search exists minimum once
+		});
+		
+	});
+	$rules->add(function($data) {
+		$data->fileIs('example2.php');
+		$data->validation(function($validation) {
+			$count = 2;
+			$validation->whereSearch('Carlos',$count);
+		});
+	});
+});
+```
+### Directory
+We can use some different ways to select the directory (or directories)
+```php
+AnalyzeFiles::rules()->directory('examples/folder') // Just one directory
+```
+And to select two or more directories
+```php  
+$directories = array(	
+	'examples/folder',
+	'examples/folder2'
+);
+AnalyzeFiles::rules()->directory($directories);
+```
+To specify the subfolder when should search
+```php
+$results = AnalyzeFiles::rules()->directory($this->directory)->create(function($rules) {
+	$rules->add(function($data) {
+		$data->fileEndsWith('.php');
+		$data->filesInside(array('sub1','sub2')); // HERE!
+		$data->validation(function($validation) {
+			$validation->whereSearch('Carlos'); 
+		});
+	});
+});
+```
+### About the files
+We can use different functions to define the files
+```php
+$data->fileIs('example1.php');  // To select just one file
+$data->fileEndsWith('.php');    // To search in all php files
+$data->files(array('example1.php','example2.php')); // Select the names
+```
+### About validation 
+```php
+$validation->whereSearch('Carlos'); // Check if exists 'Carlos' in the file, return a boolean
+$validation->whereSearch('Carlos', 2); // Check that 'Carlos' is twice in the file
+```
+### Return example
+```php
+$results = array(
+	'example1.php' => true,
+	'example2.php' => false,
+);
 ```
