@@ -15,8 +15,20 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     // Example of return
 	/* 
 		$results = array(
-			'example1.php' => true,
-			'example2.php' => true,
+			'example1.php' => array(
+                'result'    => true,
+                'requirements'  => array(
+                    0 => array(
+                        'function'    => 'NoSearch',
+                        'value'       => 'Carlos',
+                        'result'      => true
+                    ), 1 => array(
+                        'function'    => 'Search',
+                        'value'       => 'Jorge',
+                        'result'      => true
+                    )
+                )
+            )
 		);
 	*/
 
@@ -41,8 +53,12 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertTrue( $results['example1.php'] );
-    	$this->assertTrue( $results['example2.php'] );
+        $this->assertTrue( is_array($results['example1.php']) );
+    	$this->assertTrue( $results['example1.php']['result'] );
+    	$this->assertTrue( $results['example2.php']['result'] );
+        $this->assertTrue( isset( $results['example2.php']['requirements'][0]['function'] ) );
+        $this->assertTrue( isset( $results['example2.php']['requirements'][0]['value'] ) );
+        $this->assertTrue( isset( $results['example2.php']['requirements'][0]['result'] ) );
 
     }
 
@@ -68,8 +84,8 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertTrue( $results['example1.php'] );
-    	$this->assertFalse( $results['example2.php'] );
+    	$this->assertTrue( $results['example1.php']['result'] );
+    	$this->assertFalse( $results['example2.php']['result'] );
 
     }
 
@@ -85,8 +101,8 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertTrue( $results['example1.php'] );
-    	$this->assertTrue( $results['example2.php'] );
+    	$this->assertTrue( $results['example1.php']['result'] );
+    	$this->assertTrue( $results['example2.php']['result'] );
 
     }
 
@@ -102,8 +118,8 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertTrue( $results['example1.php'] );
-    	$this->assertTrue( $results['example2.php'] );
+    	$this->assertTrue( $results['example1.php']['result'] );
+    	$this->assertTrue( $results['example2.php']['result'] );
 
     }
 
@@ -123,9 +139,9 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertTrue( $results['examples/folder/example1.php'] );
-    	$this->assertTrue( $results['examples/folder/example2.php'] );
-    	$this->assertTrue( $results['examples/folder2/example1.php'] );
+    	$this->assertTrue( $results['examples/folder/example1.php']['result'] );
+    	$this->assertTrue( $results['examples/folder/example2.php']['result'] );
+    	$this->assertTrue( $results['examples/folder2/example1.php']['result'] );
 
     }
 
@@ -141,44 +157,10 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		});
     	});
     	$this->assertTrue( is_array($results) );
-    	$this->assertFalse( $results['sub1/sub1.php'] );
-    	$this->assertTrue( $results['sub2/sub2.php'] );
+    	$this->assertFalse( $results['sub1/sub1.php']['result'] );
+    	$this->assertTrue( $results['sub2/sub2.php']['result'] );
 
     }
-
-    /*
-
-    
-	public function testReplaceAWord() {
-
-		// We will replace the word 'Carlos' for 'Jorge'
-		$results = AnalyzeFiles::directory($this->directory)
-			->whereFilesEndsWith('.php')
-			->do(function($data, $file) {
-				$data->whereExist('Carlos');
-				$data->replace('Jorge');
-			})->results();
-
-		$this->assertTrue( is_array($results) );
-		/*
-			$result = array(
-				'example1.php' => array(
-					'search'		=> 'Carlos',
-					'replacement'	=> 'Jorge',
-					'count'			=> 1,
-					'data'			=> array(
-						0 => array(
-							'before' 	=> 'echo \'Hi Carlos\';',
-							'after'		=> 'echo \'Hi Jorge\';'
-						)
-					)
-				)
-			);
-		*//*
-		$this->assertTrue( FileModifier::file('composer.json')->exists() );
-		$this->assertFalse( FileModifier::file('holamundo.php')->exists() );
-
-	}*/
 
 }
 ?> 

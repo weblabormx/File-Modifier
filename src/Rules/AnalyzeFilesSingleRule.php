@@ -21,7 +21,10 @@ class AnalyzeFilesSingleRule extends FileActions {
 			$file = str_replace($this->directory.'/', '', $this->file);
 		}
 
-		$this->results[$file] = $class->results();
+		$this->results[$file] = array(
+			'result'		=> $class->results(),
+			'requirements'	=> $class->getValidation()
+		);
 
 	}
 

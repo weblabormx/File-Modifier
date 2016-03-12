@@ -173,7 +173,7 @@ This class helps you to make changes in an specified file. You can use functions
         $action->whereSearch('Example1');
         $action->replace('Hi', 'Bye');
     });
-}); // For no executing
+});
 ```
 ### Returned array
 ```php
@@ -272,7 +272,19 @@ $validation->whereNoSearch('Carlos', $count);
 ### Return example
 ```php
 $results = array(
-	'example1.php' => true,
-	'example2.php' => false,
+	'example1.php' => array(
+        'result'    => true,
+        'requirements'  => array(
+            0 => array(
+                'function'    => 'NoSearch',
+                'value'       => 'Carlos',
+                'result'      => true
+            ), 1 => array(
+                'function'    => 'Search',
+                'value'       => 'Jorge',
+                'result'      => true
+            )
+        )
+    )
 );
 ```
