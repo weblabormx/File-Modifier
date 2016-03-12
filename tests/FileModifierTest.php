@@ -1,7 +1,6 @@
 <?php
 use \WeblaborMX\FileModifier\FileModifier;
 include_once 'src/FileModifier.php';
-include_once 'src/Helper.php';
 
 class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
