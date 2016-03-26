@@ -62,7 +62,7 @@ class FileRunner {
     				continue;
     			}
 
-	    		if($action['val']) {
+	    		if($action['val']!==false) {
 					$success = $FileRunnerActions->$function($search, $action['val']);
 	    		} else {
 	    			$success = $FileRunnerActions->$function($search);

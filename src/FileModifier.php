@@ -61,6 +61,9 @@ class FileModifier {
 	function getFunctionLines($function, $array = array()) {
 		$search = array("function $function(","function $function (");
 		$res = $this->find($search, false, $array)->execute();
+		if ($res==false) {
+			return false;
+		}
 		foreach ($res as $value) {
 			foreach ($value as $object) {
 				$line = $object->line;
@@ -103,6 +106,9 @@ class FileModifier {
 	function getFunctionInit($function, $array = array()) {
 		$search = array("function $function(","function $function (");
 		$res = $this->find($search, false, $array)->execute();
+		if ($res==false) {
+			return false;
+		}
 		foreach ($res as $value) {
 			foreach ($value as $object) {
 				$line = $object->line;
@@ -175,6 +181,9 @@ class FileModifier {
 	function getIfLines($if, $array = array()) {
 		$search = array($if);
 		$res = $this->find($search, false, $array)->first();
+		if ($res==false) {
+			return false;
+		}
 		$line = $res->line;
 		if (isset($line)) {
 			$archivo = self::$file;
