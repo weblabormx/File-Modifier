@@ -1,6 +1,7 @@
 Analyze Files
 ======
 This class helps you to make changes in an specified file. You can use functions from `FileModifier` function.
+## Execute
 ### Basic example
 ```php
  $results = AnalyzeFiles::directory($this->directory)->execute(function($file) {
@@ -47,7 +48,7 @@ $result = array(
     )
 );
 ```
-## Analyze Files - Rules
+## Rules
 This class will help you to know if some rules are being successfull or not.
 ### Basic example
 ```php

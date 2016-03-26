@@ -1,4 +1,6 @@
 <?php 
+include_once 'src/FileRunnerActions.php';
+include_once 'src/FileRunner.php';
 include_once 'src/FileModifier.php';
 include_once 'src/FileActions.php';
 include_once 'src/FileFunctions.php';
