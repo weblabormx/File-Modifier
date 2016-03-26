@@ -21,7 +21,7 @@ class FileRunnerActions {
 		return false;
 	}
 
-	function findByLine($line) {
+	function getLine($line) {
 		if ($this->line == $line) {
 			return true;
 		}
@@ -79,6 +79,22 @@ class FileRunnerActions {
 	function changeLine($line, $change) {
 		if ($this->line == $line) {
 			$this->value = "$change\n";
+			return true;
+		}
+		return false;
+	}
+
+	function removeLine($line) {
+		if ($this->line == $line) {
+			$this->value = "";
+			return true;
+		}
+		return false;
+	}
+
+	function removeLineWhere($search) {
+		if (Helper::hasString( $this->value, $search )) {
+			$this->value = "";
 			return true;
 		}
 		return false;

@@ -12,6 +12,12 @@ We need the function `execute()` to execute the modifications.
 ->execute();        // It will modify the file
 ->execute(false);   // It will return the posible modifications but without doing it.
 ```
+### First
+If we want only the first result we will use first
+```php
+->first();        // It will modify the file
+->first(false);   // It will return the posible modifications but without doing it.
+```
 ### Exists
 Used to know if a file exists, will return a boolean
 ```php
@@ -30,9 +36,12 @@ To search the word `user` we need the next code.
 ```php
 $return = FileModifier::file('file.php')->find('user')->execute();
 ```
-Return will be something like this
+This example will return multiple objects, that are the results of the search
 ```php
-$return = FileModifier::file('file.php')->find('user')->execute();
+foreach($return as $object) {
+    $object->value; // The value of the line
+    $object->line; // The number of line
+} 
 ```
 ##### Multiple search
 `Find` function accepts an array as parameter
@@ -40,18 +49,21 @@ $return = FileModifier::file('file.php')->find('user')->execute();
 $search = array("user","1");
 $return = FileModifier::file('file.php')->find($search)->execute();
 ```
-##### Returns
-Returns an array with the number of gotten results, each result with the number of line and the actual content of the line.
+Returns an array with the number of gotten results.
 ```php
 $return = array(
     'user' => array(
-        'line 4' => $info,
-        'line 6' => $info,
+        ...
     ),
     '1' => array(
         ...
     )
 );
+```
+##### Get line
+To know information about the line in a file
+```php
+FileModifier::file('file.php')->getLine($line)->first();
 ```
 #### A File exists
 To check if a file exists you should execute the next code. Returns a boolean.
@@ -66,7 +78,7 @@ FileModifier::file('file.php')->count();
 #### Get the line of a search
 if you want to know the line where `user` appears you need to use:
 ```php
-FileModifier::file('file.php')->getLineWhere('user');
+FileModifier::file('file.php')->find('user')->first()->line;
 ```
 It will give the first word found. Returns a number.
 #### Get the line where a function begins
@@ -93,6 +105,7 @@ To search the word `user` and replace it for `guest`, it will change all the res
 ```php
 FileModifier::file('file.php')->replace('user', 'guest')->execute();
 ```
+returns an array with objects about changes made or `false` if the word was not founded
 #### Replace a line
 Used to change a full line.
 - `$search`  What you are looking in the line.
@@ -107,6 +120,13 @@ Add a line before the line of keyword searched
 ```php
 FileModifier::file('file.php')->addBeforeLine($search, $replacement)->execute();
 ```
+#### Add a line after  a keyword
+The same that `addBeforeLine`but instead adding the line before is added after.
+- `$search`  What you are looking in the line.
+- `$replacement` What you want to put in the line after
+```php
+FileModifier::file('file.php')->addAfterLine($search, $replacement)->execute();
+```
 #### Add a line before a line
 The same that `addBeforeLine`but instead searching a word you search the number of line
 - `$search`  The line
@@ -114,12 +134,12 @@ The same that `addBeforeLine`but instead searching a word you search the number 
 ```php
 FileModifier::file('file.php')->addBeforeLineByLine($search, $replacement)->execute();
 ```
-#### Add a line after  a keyword
-The same that `addBeforeLine`but instead adding the line before is added after.
-- `$search`  What you are looking in the line.
-- `$replacement` What you want to put in the line after
+#### Add a line after a line
+The same that `addBeforeLineByLine`but instead searching a word you search the number of line
+- `$search`  The line
+- `$replacement` What you want to put in the line before.
 ```php
-FileModifier::file('file.php')->addAfterLine($search, $replacement)->execute();
+FileModifier::file('file.php')->addAfterLineByLine($search, $replacement)->execute();
 ```
 #### Add at the end of the file
 Add a line at the last line of the file
@@ -133,6 +153,16 @@ Change the information of a line
 - `$change` New information
 ```php
 FileModifier::file('file.php')->changeLine($line, $change)->execute();
+```
+#### Remove a line
+Remove a line, needs `$line` (Number of line)
+```php
+FileModifier::file('file.php')->removeLine($line)->execute();
+```
+#### Remove a line where
+Remove a line where there is a keyword, needs `$search` 
+```php
+FileModifier::file('file.php')->removeLineWhere($search)->execute();
 ```
 #### Do multiple actions at the same time
 If you want to execute a lot of functions at the same time you can do it.

@@ -53,12 +53,12 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	public function testFindByLine() {
 
-		$found = FileModifier::file($this->file)->findByLine(8)->first();
+		$found = FileModifier::file($this->file)->getLine(8)->first();
 	    $this->assertEquals( '// Comentary', trim($found->value) );
 
-		$found = FileModifier::file($this->file)->findByLine(832)->first();
+		$found = FileModifier::file($this->file)->getLine(832)->first();
 	    $this->assertFalse( $found );
-	    $found = FileModifier::file($this->file)->findByLine(832)->execute();
+	    $found = FileModifier::file($this->file)->getLine(832)->execute();
 	    $this->assertFalse( $found );
 
 	}
@@ -66,7 +66,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	public function testCount() {
 
 		$found = FileModifier::file($this->file)->count();
-		$this->assertEquals( 28, $found );
+		$this->assertEquals( 29, $found );
 
 		$found = FileModifier::file($this->file)->find('user')->count();
 	    $this->assertEquals( 4, $found );		// 4 elements with 'user' founded
@@ -242,22 +242,35 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $this->assertEquals( 8, $found->line );
 
 	}
-/*
+
 	public function testRemoveLine() {
 		$line = 8;
-		$change = '// new comment';
+		$change = '// old comment';
 
-		$found = FileModifier::file($this->file)->find($change)->execute();
-	    $this->assertFalse( $found );
+		$found = FileModifier::file($this->file)->getLine($line)->first();
+	    $oldvalue = trim($found->value);
 
-	    $found = FileModifier::file($this->file)->changeLine($line, $change)->execute();
+	    $found = FileModifier::file($this->file)->removeLine($line)->execute();
+		$found = FileModifier::file($this->file)->getLine($line)->first();
+	    $newvalue = trim($found->value);
 
-	    $found = FileModifier::file($this->file)->find($change)->count();
-	    $this->assertEquals( 1, $found );
-	    $found = FileModifier::file($this->file)->find($change)->first();
-	    $this->assertEquals( 8, $found->line );
+	    $this->assertFalse( $newvalue==$oldvalue );
 
-	}*/
+	}
+
+	public function testRemoveLineWhere() {
+		$search = 'user';
+
+		$lines = FileModifier::file($this->file)->count();
+
+	    $found = FileModifier::file($this->file)->removeLineWhere($search)->execute();
+
+		$newlines = FileModifier::file($this->file)->count();
+
+	    $this->assertEquals( 29, $lines );
+	    $this->assertEquals( 25, $newlines );
+
+	}
 
 	// Example of return
 	/*
