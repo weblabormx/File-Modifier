@@ -13,7 +13,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    /* Normal code testing *//*
+    /* Normal code testing */
     public function testFile() {
 
     	$found = FileModifier::file('noexisteesto.php')->exists();
@@ -25,7 +25,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testFind() {
-/*
+
 		$found = FileModifier::file($this->file)->find('user')->count();
 	    $this->assertEquals( 4, $found );		// 4 elements with 'user' founded
 
@@ -38,7 +38,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 
 	}
-/*
+
 	public function testFindArray() {
 
 		$search = array("user","1");
@@ -283,7 +283,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 			)
 		);
 	*/ 
-/*
+
 	public function testMultiple() {
 
 		$res = FileModifier::file($this->file)
@@ -305,24 +305,30 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $this->assertEquals( $res, 22 );
 
 	}
-*/
+
 	public function testGetIfLines() {
 
 		$res = FileModifier::file($this->file)->getIfLines("if(true)");
 	    $this->assertEquals( $res['starts'], 10 ); // it says the first founded
 	    $this->assertEquals( $res['finish'], 13 );
-	    /*$res = FileModifier::file($this->file)->getIfLines("if(true)", false, 2); // Search the second one
+	    $array = array(
+	    	'pos'	=> 2
+	    );
+	    $res = FileModifier::file($this->file)->getIfLines("if(true)", $array); // Search the second one
 	    $this->assertEquals( $res['starts'], 18 );
 	    $this->assertEquals( $res['finish'], 20 );
 
 	    $lines = FileModifier::file($this->file)->getFunctionLines("hi");
 
-	    $res = FileModifier::file($this->file)->getIfLines("if(true)", $lines); // Search inside hi function
+	    $array = array(
+	    	'lines'	=> $lines
+	    );
+	    $res = FileModifier::file($this->file)->getIfLines("if(true)", $array); // Search inside hi function
 	    $this->assertEquals( $res['starts'], 18 );
-	    $this->assertEquals( $res['finish'], 20 );*/
+	    $this->assertEquals( $res['finish'], 20 );
 
 	}
-/*
+
 	function testLinesAndPos() {
 	
 	    $array = array(
@@ -352,6 +358,12 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    );
 	    $found = FileModifier::file($this->file)->find('user', false, $array)->first();
 	    $this->assertEquals( 'user4,pass4', trim($found->value) );
+
+	    $array = array(
+	    	'pos'	=> 3
+	    );
+	    $found = FileModifier::file($this->file)->find('user', false, $array)->first();
+	    $this->assertEquals( 'user3,pass3', trim($found->value) );
 	}
 	/*
 	public function testAddAtTheEnd() {

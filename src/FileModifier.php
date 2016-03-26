@@ -23,7 +23,7 @@ class FileModifier {
 		
 		$this->actions[] = $res;
 		return self::$pointer;
-		
+
     }
 
     // Basic functions
@@ -58,9 +58,9 @@ class FileModifier {
 	}
 
 	// Advance functions
-	function getFunctionLines($function) {
+	function getFunctionLines($function, $array = array()) {
 		$search = array("function $function(","function $function (");
-		$res = $this->find($search)->execute();
+		$res = $this->find($search, false, $array)->execute();
 		foreach ($res as $value) {
 			foreach ($value as $object) {
 				$line = $object->line;
@@ -100,9 +100,9 @@ class FileModifier {
 		return false;
 	}
 
-	function getFunctionInit($function) {
+	function getFunctionInit($function, $array = array()) {
 		$search = array("function $function(","function $function (");
-		$res = $this->find($search)->execute();
+		$res = $this->find($search, false, $array)->execute();
 		foreach ($res as $value) {
 			foreach ($value as $object) {
 				$line = $object->line;
@@ -172,9 +172,9 @@ class FileModifier {
 		return false;
 	}
 
-	function getIfLines($if) {
+	function getIfLines($if, $array = array()) {
 		$search = array($if);
-		$res = $this->find($search)->first();
+		$res = $this->find($search, false, $array)->first();
 		$line = $res->line;
 		if (isset($line)) {
 			$archivo = self::$file;

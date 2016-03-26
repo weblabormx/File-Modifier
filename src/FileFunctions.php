@@ -26,8 +26,7 @@ class FileFunctions {
 	function whereSearch($search, $count=null) {
 		$execution = FileModifier::file($this->file)->find($search)->execute();
 		$result = false;
-		if (isset($execution[$search])) {
-			$execution = $execution[$search];
+		if ($execution) {
 			if (is_numeric($count)) {
 				$result = count($execution) == $count;
 			} else if (count($execution) > 0) {
@@ -41,8 +40,7 @@ class FileFunctions {
 	function whereNoSearch($search, $count=null) {
 		$execution = FileModifier::file($this->file)->find($search)->execute();
 		$result = true;
-		if (isset($execution[$search])) {
-			$execution = $execution[$search];
+		if ($execution) {
 			if (is_numeric($count)) {
 				$result = count($execution) != $count;
 			} else if (count($execution) > 0) {

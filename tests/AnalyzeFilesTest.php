@@ -64,7 +64,6 @@ class AnalyzeFilesTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( 2, count($results['sub1/sub1.php']) );     // Two actions
     	$this->assertTrue( isset($results['sub1/sub1.php'][0]['requirements'][0]['function']) );
         $this->assertTrue( isset($results['sub1/sub1.php'][0]['requirements'][0]['value']) );
-    	$this->assertTrue( isset($results['sub1/sub1.php'][0]['results'][0]['action']) );
 
     }
 

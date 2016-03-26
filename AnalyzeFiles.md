@@ -1,8 +1,9 @@
 Analyze Files
 ======
 This class helps you to make changes in an specified file. You can use functions from `FileModifier` function.
-## Execute
-### Basic example
+## Actions
+This class helps you to execute certain actions when the validation returns true.
+### Example
 ```php
  $results = AnalyzeFiles::directory($this->directory)->execute(function($file) {
     $file->fileIs('sub1/sub1.php');
@@ -17,7 +18,7 @@ This class helps you to make changes in an specified file. You can use functions
     });
 });
 ```
-### Returned array
+**Returned array:**
 ```php
 $result = array(
     'sub1/sub1.php' => array( // File name

@@ -22,6 +22,3 @@ use \WeblaborMX\FileModifier\Helper;
 - [FileModifier](FileModifier.md)
 - [Helper](Helper.md)
 - [AnalyzeFiles](AnalyzeFiles.md)
-
-
-

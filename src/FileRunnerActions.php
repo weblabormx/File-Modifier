@@ -7,7 +7,6 @@ class FileRunnerActions {
 	public $value;
 	private $action;
 	private $pos;
-	private $generalFilter = true;
 	private $posSuccessfull = false;
 
 	function __construct($value, $action, $line, $pos) {
@@ -15,25 +14,24 @@ class FileRunnerActions {
 		$this->line = $line; 	// Number of line
 		$this->action = $action;
 		$this->pos = $pos;
-		$this->generalFilter = $this->makeFilter();
 	}
 
 	function find($search) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			return true;
 		}
 		return false;
 	}
 
 	function getLine($line) {
-		if ($this->generalFilter && $this->line == $line) {
+		if ($this->generalFilter($this->line == $line)) {
 			return true;
 		}
 		return false;
 	}
 
 	function replace($search, $replace) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			$this->value = str_replace($search, $replace, $this->value);
 			return true;
 		}
@@ -41,7 +39,7 @@ class FileRunnerActions {
 	}
 
 	function replaceLineWhere($search, $replace) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			$this->value = $replace;
 			return true;
 		}
@@ -49,7 +47,7 @@ class FileRunnerActions {
 	}
 
 	function addBeforeLine($search, $addition) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			$this->value = "$addition\n$this->value";
 			return true;
 		}
@@ -57,7 +55,7 @@ class FileRunnerActions {
 	}
 
 	function addAfterLine($search, $addition) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			$this->value = "$this->value$addition\n";
 			return true;
 		}
@@ -65,7 +63,7 @@ class FileRunnerActions {
 	}
 
 	function addBeforeLineByLine($line, $addition) {
-		if ($this->generalFilter && $this->line == $line) {
+		if ($this->generalFilter($this->line == $line)) {
 			$this->value = "$addition\n$this->value";
 			return true;
 		}
@@ -73,7 +71,7 @@ class FileRunnerActions {
 	}
 
 	function addAfterLineByLine($line, $addition) {
-		if ($this->generalFilter && $this->line == $line) {
+		if ($this->generalFilter($this->line == $line)) {
 			$this->value = "$this->value$addition\n";
 			return true;
 		}
@@ -81,7 +79,7 @@ class FileRunnerActions {
 	}
 
 	function changeLine($line, $change) {
-		if ($this->generalFilter && $this->line == $line) {
+		if ($this->generalFilter($this->line == $line)) {
 			$this->value = "$change\n";
 			return true;
 		}
@@ -89,7 +87,7 @@ class FileRunnerActions {
 	}
 
 	function removeLine($line) {
-		if ($this->generalFilter && $this->line == $line) {
+		if ($this->generalFilter($this->line == $line)) {
 			$this->value = "";
 			return true;
 		}
@@ -97,7 +95,7 @@ class FileRunnerActions {
 	}
 
 	function removeLineWhere($search) {
-		if ($this->generalFilter && Helper::hasString( $this->value, $search )) {
+		if ($this->generalFilter(Helper::hasString( $this->value, $search ))) {
 			$this->value = "";
 			return true;
 		}
@@ -112,7 +110,7 @@ class FileRunnerActions {
 		return $this->posSuccessfull;
 	}
 
-	function makeFilter() {
+	function generalFilter($resultAction) {
 		$return = true;
 		if (
 			$this->action['lines'] && 
@@ -127,8 +125,15 @@ class FileRunnerActions {
 			}
 		}
 		if ($return && $this->action['pos'] && $this->pos != $this->action['pos']) {
+			// if were ok if we didn't have pos option
+			if ($resultAction) {
+				$this->posSuccessfull = true;
+			}
 			$return = false;
-			$this->posSuccessfull = true;
+
+		}
+		if ($return && !$resultAction) {
+			$return = false;
 		}
 
 		return $return;
