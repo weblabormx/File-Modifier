@@ -39,7 +39,7 @@ class AnalyzeFilesRulesTest extends \PHPUnit_Framework_TestCase {
     		$rules->add(function($data) {
     			$data->fileIs('example1.php');
     			$data->validation(function($validation) {
-    				$count = 1;
+                    $count = 1;
 	    			$validation->whereSearch('Carlos', $count); 
 	    			$validation->whereSearch('Example1'); // Without $count only search that the search exists minimum once
     			});
