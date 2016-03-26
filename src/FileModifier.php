@@ -13,14 +13,17 @@ class FileModifier {
 	}
 
 	public function __call($name, $arguments) {
-    	$res = array();
-		$res["search"] = $arguments[0];
-		$res["function"] = $name;
-		$res["val"] = isset($arguments[1]) ? $arguments[1] : false;
-		$res["lines"] = isset($arguments[2]) ? $arguments[2] : false;
-		$res["pos"] = isset($arguments[3]) ? $arguments[3] : false;
+
+    	$res 				= array();
+		$res["search"] 		= $arguments[0];
+		$res["function"] 	= $name;
+		$res["val"] 		= isset($arguments[1]) ? $arguments[1] : false;
+		$res["lines"] 		= isset($arguments[2]['lines']) ? $arguments[2]['lines'] : false;
+		$res["pos"] 		= isset($arguments[2]['pos']) ? $arguments[2]['pos'] : false;
+		
 		$this->actions[] = $res;
 		return self::$pointer;
+		
     }
 
     // Basic functions

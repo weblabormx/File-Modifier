@@ -6,9 +6,9 @@ class FileRunner {
 	static private $file;
 	private $res = array();
 	private $numline = 0;
-	private $searchedWords = array();
 	private $real; 
 	private $actions;
+	private $pos;
 
 	static function file($file) {
 		self::$file = $file;
@@ -52,15 +52,15 @@ class FileRunner {
 
 	    	foreach ($action["search"] as $search) {
 
+	    		$pos = isset($this->pos[$action['function']][$search]) ? count($this->pos[$action['function']][$search]) : 0;
+	    		$pos++;
 	    		$actionc = $action;
 	    		$actionc['search'] = $search;
-	    		$FileRunnerActions = new FileRunnerActions($line, $actionc, $this->numline);
+	    		$FileRunnerActions = new FileRunnerActions($line, $actionc, $this->numline, $pos);
 
 	    		if (strlen($search)<=0) {
     				continue;
     			}
-
-	    		$this->searchedWords[] = $search;
 
 	    		if($action['val']) {
 					$success = $FileRunnerActions->$function($search, $action['val']);
@@ -74,7 +74,10 @@ class FileRunner {
 	    			} else { // if has multiple search
 	    				$this->res[$search][] = $FileRunnerActions;
 	    			}
-	    			
+	    		}
+
+	    		if ($FileRunnerActions->getPosSuccessfull()) {
+	    			$this->pos[$action['function']][$search][] = true;
 	    		}
 
 	    		$line = $FileRunnerActions->getValue();
