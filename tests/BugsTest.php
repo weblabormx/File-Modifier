@@ -9,12 +9,12 @@ class BugsTest extends \PHPUnit_Framework_TestCase {
 	public function testBugFunctionsLines() {
 
 		$lines = FileModifier::file( 'examples/usuarios.php' )->getFunctionLines('database');
-	    $this->assertEquals($lines['starts'], 33);
-	    $this->assertEquals($lines['finish'], 39);
+	    $this->assertEquals(33, $lines['starts']);
+	    $this->assertEquals(39, $lines['finish']);
 
 		$lines = FileModifier::file( 'examples/controller.php' )->getFunctionLines('getList');
-	    $this->assertEquals($lines['starts'], 52);
-	    $this->assertEquals($lines['finish'], 57);
+	    $this->assertEquals(52, $lines['starts']);
+	    $this->assertEquals(57, $lines['finish']);
 
 	    $lines = FileModifier::file( 'examples/controller.php' )->getFunctionLines('getSee');
 	    $this->assertFalse($lines);

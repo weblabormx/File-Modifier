@@ -59,46 +59,21 @@ class FileModifier {
 
 	// Advance functions
 	function getFunctionLines($function, $array = array()) {
-		$search = array("function $function(","function $function (");
-		$res = $this->find($search, false, $array)->execute();
-		if ($res==false) {
-			return false;
-		}
-		foreach ($res as $value) {
-			foreach ($value as $object) {
-				$line = $object->line;
-				
-			}
-		}
-		if (isset($line)) {
-			$archivo = self::$file;
-			$handle = fopen($archivo, "r");
-			if ($handle) { // process the line read.
-				$arrayR = array();
-				$resF = 0;
-				$numline = 0;
-			    while (($liness = fgets($handle)) !== false) {
-			    	$numline++;
-			    	if ($numline==$line) {
-			    		$firstText = explode(' ', trim($liness)); // Get the first text of the sentence
-			    		$spac = explode($firstText[0], $liness); // Get the space between first word and the begining
-						$spac = $spac[0];
-						
-			    	}
-			    	if ($numline<$line) {
-			    		continue;
-			    	}
-		    		//echo "[$numline] => $liness\n";
-		    		$finishLine = 0;
-			    	if (Helper::startsWith($liness, "$spac}")) {
-			    		$finishLine = $numline;
-			    		//echo "Entra";
-			    		break;
-			    	}
-			    }
-			    $res = array("starts"=>$line, "finish"=>$finishLine);
-			    return $res;
-			}
+		$search = "function $function";
+		$res = $this->find($search, false, $array)->first();
+		if ($res!==false) {
+			$numline = $res->line;
+			$line = $this->getLine($numline)->first()->value;
+
+			$firstText = explode(' ', trim($line)); // Get the first text of the sentence
+    		$spac = explode($firstText[0], $line); // Get the space between first word and the begining
+			$spac = $spac[0];
+
+			$array = array('lines'=>array('starts' => $numline, 'finish' => $numline+1000));
+			$this->actions = array();
+			$finishLine = $this->findAtBeginning($spac.'}', false, $array)->first()->line;
+			$res = array("starts"=>$numline, "finish"=>$finishLine);
+			return $res;
 		}
 		return false;
 	}

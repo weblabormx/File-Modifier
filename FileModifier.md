@@ -107,6 +107,11 @@ $return = array(
     )
 );
 ```
+### Find at the beginning
+To search the word `user` but that appears just at the beginning
+```php
+FileModifier::file($this->file)->findAtBeginning($search)->first();
+```
 ### Get line
 To know information about the line in a file
 ```php

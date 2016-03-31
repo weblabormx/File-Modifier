@@ -23,6 +23,13 @@ class FileRunnerActions {
 		return false;
 	}
 
+	function findAtBeginning($search) {
+		if ($this->generalFilter(Helper::startsWith( $this->value, $search ))) {
+			return true;
+		}
+		return false;
+	}
+
 	function getLine($line) {
 		if ($this->generalFilter($this->line == $line)) {
 			return true;

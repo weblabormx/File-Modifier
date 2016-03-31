@@ -154,6 +154,14 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	    $found = FileModifier::file($this->file)->find($search)->first();
 	    $this->assertEquals( $linesearch+1, $found->line );
+
+	    // Second insert
+	    $addition = 'user3.2, hola2';
+	    FileModifier::file($this->file)->addBeforeLine($search, $addition)->execute();
+	   	$found = FileModifier::file($this->file)->find($addition)->first();
+	    $this->assertEquals( $linesearch+1, $found->line );
+	    $found = FileModifier::file($this->file)->find($search)->first();
+	    $this->assertEquals( $linesearch+2, $found->line );
 	}
 
 	public function testAddAfterLine() {
@@ -364,6 +372,12 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    );
 	    $found = FileModifier::file($this->file)->find('user', false, $array)->first();
 	    $this->assertEquals( 'user3,pass3', trim($found->value) );
+	}
+
+	public function testFindAtBeginning() {
+		$search = '	by';
+	    $found = FileModifier::file($this->file)->findAtBeginning($search)->first();
+	    $this->assertEquals( 23, $found->line );
 	}
 	/*
 	public function testAddAtTheEnd() {
