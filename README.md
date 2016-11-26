@@ -15,9 +15,9 @@ PHP Package for modifing single files. With this package you would have the posi
 ### Basics
 First to use the package you will need to add the namespace:
 ```php
-use \WeblaborMX\FileModifier\FileModifier;
-use \WeblaborMX\FileModifier\Helper;
-use \WeblaborMX\FileModifier\AnalyzeFiles;
+use WeblaborMX\FileModifier\FileModifier;
+use WeblaborMX\FileModifier\Helper;
+use WeblaborMX\FileModifier\AnalyzeFiles;
 ```
 **Read More:**
 - [FileModifier](FileModifier.md)
