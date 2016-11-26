@@ -23,6 +23,11 @@ Used to know if a file exists, will return a boolean
 ```php
 FileModifier::file($this->file)->exists();
 ```
+### Create
+Used to create a new file
+```php
+FileModifier::file($this->file)->create('Hola Mundo');
+```
 ### Count
 If we want the quantity of results gotten, if we do only one action will return the number of changes made, if we execute more actions will return the quantity of actions made successfully
 ```php

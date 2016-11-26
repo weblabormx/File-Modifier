@@ -32,6 +32,14 @@ class FileModifier {
 		return file_exists(self::$file);
 	}
 
+	function create($data) {
+		if($fh = fopen(self::$file,'w')){
+		    $stringData = $data;
+		    fwrite($fh, $stringData, 1024);
+		    fclose($fh);
+		}
+	}
+
 	function count() {
 		if (count($this->actions)==0) { // We are analyzing the file
 			$class = FileRunner::file(self::$file);

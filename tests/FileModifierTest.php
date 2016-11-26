@@ -379,6 +379,14 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $found = FileModifier::file($this->file)->findAtBeginning($search)->first();
 	    $this->assertEquals( 23, $found->line );
 	}
+
+	public function testCreateFile() {
+		$file = 'borrar.txt';
+	    $this->assertFalse( FileModifier::file($file)->exists() );
+	    $found = FileModifier::file($file)->create('Hola');
+	    $this->assertTrue( FileModifier::file($file)->exists() );
+	    unlink($file);
+	}
 	/*
 	public function testAddAtTheEnd() {
 		$addition = 'copyright';
