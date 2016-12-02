@@ -65,6 +65,21 @@ class FileModifier {
 		return false;
 	}
 
+	// General functions
+	function removeLinesWhere($start_keyword, $finish_keyword) {
+		$start = FileModifier::file(self::$file)->find($start_keyword)->first()->line;
+		$finish = FileModifier::file(self::$file)->find($finish_keyword)->first()->line;
+		return $this->removeLinesBetweenLines($start, $finish);
+	}
+
+	function removeLinesBetweenLines($start, $finish) {
+		$FileModifier = FileModifier::file(self::$file);
+		for ($i=$start; $i <= $finish; $i++) { 
+			$FileModifier = $FileModifier->removeLine($i);
+		}
+		return $FileModifier;
+	}
+
 	// Advance functions
 	function getFunctionLines($function, $array = array()) {
 		$search = "function $function";

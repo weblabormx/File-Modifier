@@ -251,7 +251,6 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	public function testRemoveLine() {
 		$line = 8;
-		$change = '// old comment';
 
 		$found = FileModifier::file($this->file)->getLine($line)->first();
 	    $oldvalue = trim($found->value);
@@ -275,6 +274,22 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	    $this->assertEquals( 29, $lines );
 	    $this->assertEquals( 25, $newlines );
+
+	}
+
+	public function testRemoveLinesWhere() {
+		$start_keyword = '// Comentary';
+		$finish_keyword = '/* This are comments made';
+
+		$line = FileModifier::file($this->file)->find($start_keyword)->first()->line;
+		$this->assertEquals(8, $line);
+
+	    FileModifier::file($this->file)->removeLinesWhere($start_keyword, $finish_keyword)->execute();
+
+		$found = FileModifier::file($this->file)->getLine($line)->first();
+	    $found = trim($found->value);
+
+	    $this->assertEquals( 'by some people */', $found );
 
 	}
 

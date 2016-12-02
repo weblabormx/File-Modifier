@@ -221,6 +221,16 @@ Remove a line where there is a keyword, needs `$search`
 ```php
 FileModifier::file('file.php')->removeLineWhere($search)->execute();
 ```
+### Remove lines where keywords
+Remove some lines where between `$start` and `$finish` keywords.
+```php
+FileModifier::file('file.php')->removeLinesWhere($start, $finish)->execute();
+```
+### Remove lines between lines
+Remove the selected lines between two lines: `$start` and `$finish`. If $start is 4 and $finish  is 10 will delete line 4, 5, 6, 7, 8, 9 and 10.
+```php
+FileModifier::file('file.php')->removeLinesWhere($start, $finish)->execute();
+```
 ### Do multiple actions at the same time
 If you want to execute a lot of functions at the same time you can do it.
 ```php
