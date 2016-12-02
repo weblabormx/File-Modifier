@@ -80,6 +80,13 @@ class FileModifier {
 		return $FileModifier;
 	}
 
+	function addAtTheEnd($str) {
+		$last_line = FileModifier::file(self::$file)->count();
+		$FileModifier = FileModifier::file(self::$file)
+			->addAfterLineByLine($last_line, $str);
+		return $FileModifier;
+	}
+
 	// Advance functions
 	function getFunctionLines($function, $array = array()) {
 		$search = "function $function";

@@ -222,13 +222,10 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 		$res = FileModifier::file($this->file)->getFunctionLines("hibye"); // Get number of lines of the function
 	    $oldline = $res['finish'];
-	    $search = $oldline; // Number of line
 
-		$found = FileModifier::file($this->file)->addAfterLineByLine($search, $addition)->execute();
+		$found = FileModifier::file($this->file)->addAfterLineByLine($oldline, $addition)->execute();
 	    
-	    $res = FileModifier::file($this->file)->find($addition)->first();
-	    $newline = $res->line;
-
+	    $newline = FileModifier::file($this->file)->find($addition)->first()->line;
 	    $this->assertEquals( $oldline+1, $newline ); // A new line inside the function added
 
 	}
@@ -279,7 +276,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	public function testRemoveLinesWhere() {
 		$start_keyword = '// Comentary';
-		$finish_keyword = '/* This are comments made';
+		$finish_keyword = 'by some people';
 
 		$line = FileModifier::file($this->file)->find($start_keyword)->first()->line;
 		$this->assertEquals(8, $line);
@@ -289,7 +286,7 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 		$found = FileModifier::file($this->file)->getLine($line)->first();
 	    $found = trim($found->value);
 
-	    $this->assertEquals( 'by some people */', $found );
+	    $this->assertEquals( 'function hibye ( ) {', $found );
 
 	}
 
@@ -402,17 +399,21 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $this->assertTrue( FileModifier::file($file)->exists() );
 	    unlink($file);
 	}
-	/*
+	
 	public function testAddAtTheEnd() {
 		$addition = 'copyright';
 
-	    $found = FileModifier::file($this->file)->find($addition)->execute();
-	    $this->assertEquals( count($found), 0 );		// None elements with replacement
-	    FileModifier::file($this->file)->addAtTheEnd($addition)->execute();
-	    $found = FileModifier::file($this->file)->find($addition)->execute();
-	    $this->assertEquals( count($found), 1 );		// 1 elements with replacement
+	    $found = FileModifier::file($this->file)->find($addition)->count();
+	    $old_lines = FileModifier::file($this->file)->count();
+	    $this->assertEquals( 0, $found );		// None elements with replacement
 
-	}*/
+	    FileModifier::file($this->file)->addAtTheEnd($addition)->execute();
+
+	    $found = FileModifier::file($this->file)->find($addition)->count();
+	    $this->assertEquals( 1, $found );		// 1 elements with replacement
+	    $new_lines = FileModifier::file($this->file)->count();
+	    $this->assertTrue($new_lines-$old_lines==1); // 1 line was added
+	}
 
 	public function tearDown() {
 

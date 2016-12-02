@@ -10,6 +10,7 @@ class FileRunnerActions {
 	private $posSuccessfull = false;
 
 	function __construct($value, $action, $line, $pos) {
+
 		$this->value = $value; 	// data of the line
 		$this->line = $line; 	// Number of line
 		$this->action = $action;
@@ -79,7 +80,9 @@ class FileRunnerActions {
 
 	function addAfterLineByLine($line, $addition) {
 		if ($this->generalFilter($this->line == $line)) {
-			$this->value = "$this->value$addition\n";
+			$this->value = preg_replace('/\s+/', ' ', $this->value);
+			$addition = preg_replace('/\s+/', ' ', $addition);
+			$this->value = "$this->value\n$addition\n";
 			return true;
 		}
 		return false;
