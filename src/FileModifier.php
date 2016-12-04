@@ -89,6 +89,11 @@ class FileModifier {
 		return $FileModifier;
 	}
 
+	function removeFunction($function) {
+		$function = FileModifier::file(self::$file)->getFunctionLines($function);
+		return $this->removeLinesBetweenLines($function['starts'], $function['finish']);
+	}
+
 	// Advance functions
 	function getFunctionLines($function, $array = array()) {
 		$search = "function $function";

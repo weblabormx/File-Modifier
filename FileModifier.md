@@ -269,6 +269,12 @@ Remove the selected lines between two lines: `$start` and `$finish`. If $start i
 FileModifier::file('file.php')->removeLinesBetweenLines($start, $finish)->execute();
 ```
 
+### Remove function
+Remove the lines where exists a functiom
+```php
+FileModifier::file('file.php')->removeFunction($function)->execute();
+```
+
 ### Do multiple actions at the same time
 If you want to execute a lot of functions at the same time you can do it.
 ```php

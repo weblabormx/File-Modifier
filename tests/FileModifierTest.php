@@ -201,6 +201,14 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testRemoveFunctionLines() {
+
+		$this->assertEquals(29, FileModifier::file($this->file)->count());
+		$res = FileModifier::file($this->file)->removeFunction("hi")->execute();
+	    $this->assertEquals(21, FileModifier::file($this->file)->count());
+
+	}
+
 	public function testAddBeforeLineByLine() {
 		$addition = 'asd3.1, hola';
 
