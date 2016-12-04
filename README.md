@@ -17,9 +17,9 @@ First to use the package you will need to add the namespace:
 ```php
 use WeblaborMX\FileModifier\FileModifier;
 use WeblaborMX\FileModifier\Helper;
-use WeblaborMX\FileModifier\AnalyzeFiles;
+use WeblaborMX\FileModifier\MasiveModifier;
 ```
 **Read More:**
 - [FileModifier](FileModifier.md)
 - [Helper](Helper.md)
-- [AnalyzeFiles](AnalyzeFiles.md)
+- [MasiveModifier](MasiveModifier.md)

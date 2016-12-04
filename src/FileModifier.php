@@ -52,6 +52,8 @@ class FileModifier {
 	}
 
 	function execute($real = true) {
+		if(strlen(self::$file)==0)
+			return false;
 		return FileRunner::file(self::$file)->actions($this->actions, $real);
 	}
 
