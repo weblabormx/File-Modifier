@@ -2,8 +2,11 @@ Helper Class
 ======
 
 The Helper Class has functions that helps with the programming.
+```php
+use WeblaborMX\FileModifier\Helper;
+```
 
-### Strings
+## Strings
 ```php
 // To search if begins with a select string
 Helper::startsWith( 'hola-mundo.php', 'hola' );  // true
@@ -13,14 +16,26 @@ Helper::endsWith( 'hola-mundo.php', '.php' );    // true
 Helper::hasString( 'hola-mundo.php', 'mundo' );  // true
 ```
 
-### Directories
+## Folder
+Will help you to know information about a folder.
+
+### Attributes
 ```php
-// To move a folder from ubication
-Helper::moveFolder( $from, $to ); 
+$folder = Helper::folder($directory); 
+$folder->count();             // Total files in folder (Int    )
+$folder->total_subfolders();  // Total subfolders (Int)
+$folder->exists();            // Check if exists (Boolean)
+$folder->files();             // List of files inside (Array)
+```
+
+### Functions
+```php
+// To move (or rename) a folder from ubication
+Helper::folder( $directory )->moveTo( $to ); 
 // To copy a folder from ubication
-Helper::copyFolder( $from, $to ); 
+Helper::folder( $directory )->copyTo( $to ); 
 // To create a folder
-Helper::newFolder( $name ); 
+Helper::folder( $directory )->create(); 
 // To remove a folder
-Helper::removeFolder( $name ); 
+Helper::folder( $directory )->remove(); 
 ```
