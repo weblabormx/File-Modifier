@@ -204,8 +204,9 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	public function testRemoveFunctionLines() {
 
 		$this->assertEquals(29, FileModifier::file($this->file)->count());
-		$res = FileModifier::file($this->file)->removeFunction("hi")->execute();
+		FileModifier::file($this->file)->removeFunction("hi")->execute();
 	    $this->assertEquals(21, FileModifier::file($this->file)->count());
+	    FileModifier::file($this->file)->removeFunction("noexiste")->execute();
 
 	}
 
@@ -296,6 +297,14 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 
 	    $this->assertEquals( 'function hibye ( ) {', $found );
 
+	    FileModifier::file($this->file)->removeLinesWhere('no existe', 'tampoco')->execute();
+
+	}
+
+	public function testRemoveLinesBetweenLines() {
+		FileModifier::file($this->file)->removeLinesBetweenLines(1, 5)->execute();
+		FileModifier::file($this->file)->removeLinesBetweenLines(5, 2)->execute();
+		FileModifier::file($this->file)->removeLinesBetweenLines('asdds', 'asdasd')->execute();
 	}
 
 	// Example of return

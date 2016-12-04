@@ -69,12 +69,20 @@ class FileModifier {
 
 	// General functions
 	function removeLinesWhere($start_keyword, $finish_keyword) {
-		$start = FileModifier::file(self::$file)->find($start_keyword)->first()->line;
-		$finish = FileModifier::file(self::$file)->find($finish_keyword)->first()->line;
+		$start = FileModifier::file(self::$file)->find($start_keyword)->first();
+		if($start == false)
+			return self::$pointer;
+		$start = $start->line;
+		$finish = FileModifier::file(self::$file)->find($finish_keyword)->first();
+		if($finish == false)
+			return self::$pointer;
+		$finish = $finish->line;
 		return $this->removeLinesBetweenLines($start, $finish);
 	}
 
 	function removeLinesBetweenLines($start, $finish) {
+		if($finish <= $start || !is_numeric($start) || !is_numeric($finish))
+			return self::$pointer;
 		$FileModifier = FileModifier::file(self::$file);
 		for ($i=$start; $i <= $finish; $i++) { 
 			$FileModifier = $FileModifier->removeLine($i);
@@ -91,6 +99,8 @@ class FileModifier {
 
 	function removeFunction($function) {
 		$function = FileModifier::file(self::$file)->getFunctionLines($function);
+		if(!is_array($function))
+			return self::$pointer;
 		return $this->removeLinesBetweenLines($function['starts'], $function['finish']);
 	}
 
