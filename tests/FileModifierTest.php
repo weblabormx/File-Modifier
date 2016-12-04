@@ -420,7 +420,12 @@ class FileModifierTest extends \PHPUnit_Framework_TestCase {
 	    $found = FileModifier::file($this->file)->find($addition)->count();
 	    $this->assertEquals( 1, $found );		// 1 elements with replacement
 	    $new_lines = FileModifier::file($this->file)->count();
-	    $this->assertTrue($new_lines-$old_lines==1); // 1 line was added
+	    $this->assertEquals(1, $new_lines-$old_lines); // 1 line was added
+
+	    FileModifier::file($this->file)->addAtTheEnd("Hola\n\tHolli")->execute();
+
+	    $new_lines2 = FileModifier::file($this->file)->count();
+	    $this->assertEquals(2, $new_lines2-$new_lines); // 1 line was added
 	}
 
 	public function tearDown() {

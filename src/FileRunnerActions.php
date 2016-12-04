@@ -80,9 +80,15 @@ class FileRunnerActions {
 
 	function addAfterLineByLine($line, $addition) {
 		if ($this->generalFilter($this->line == $line)) {
-			$this->value = preg_replace('/\s+/', ' ', $this->value);
-			$addition = preg_replace('/\s+/', ' ', $addition);
-			$this->value = "$this->value\n$addition\n";
+			$this->value = "$this->value$addition\n";
+			return true;
+		}
+		return false;
+	}
+
+	function addAfterLineByLineNoN($line, $addition) {
+		if ($this->generalFilter($this->line == $line)) {
+			$this->value = "$this->value$addition";
 			return true;
 		}
 		return false;

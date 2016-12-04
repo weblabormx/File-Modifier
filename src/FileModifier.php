@@ -85,7 +85,7 @@ class FileModifier {
 	function addAtTheEnd($str) {
 		$last_line = FileModifier::file(self::$file)->count();
 		$FileModifier = FileModifier::file(self::$file)
-			->addAfterLineByLine($last_line, $str);
+			->addAfterLineByLineNoN($last_line, "\n".$str);
 		return $FileModifier;
 	}
 
