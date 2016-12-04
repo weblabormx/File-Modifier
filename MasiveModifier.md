@@ -29,9 +29,8 @@ MasiveModifier::directories($files');
 
 ## How to use it
 ```php
-MasiveModifier::directory($directory)->do(function($fileModifier) {
+MasiveModifier::directory($directory)->execute(function($fileModifier) {
     $fileModifier->replace('Hi', 'GoodBye');
-    $fileModifier->execute();
 });
 ```
-Inside of the function you will call any function in `FileModifier`.
+Inside of the function you will call any function in `FileModifier`. It is not necessary to use the execute function, it  will be launched automatically.

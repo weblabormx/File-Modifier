@@ -59,12 +59,17 @@ class Folder {
 		return false;
 	}
 
-	public function files() {
+	public function files($complete_path = false) {
 		$folders = [];
 		foreach( $this->getIterator() as $file) {
 			if(!$file->isFile())
 				continue;
-			$folders[] = $this->getPath($file->getPathname());
+			if($complete_path) {
+				$folders[] = $file->getPathname();
+			} else {
+				$folders[] = $this->getPath($file->getPathname());	
+			}
+			
 		}
 		return $folders;
 	}

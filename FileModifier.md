@@ -2,6 +2,9 @@ File-Modifier
 ======
 
 Main Function of File-Modifier library, this class will help you to modify files
+```php
+use WeblaborMX\FileModifier\FileModifier;
+```
 
 ## Basics
 To edit a file you will need to call FileModifier and the direction of the file to edit.
