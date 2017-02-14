@@ -1,5 +1,6 @@
 <?php
-class {name}Request {
+class {name}Controller {
 
+	//
 
 }

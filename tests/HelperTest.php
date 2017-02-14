@@ -34,9 +34,9 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 	// Folders
 
 	public function testFolderCount() {
-
+		// Count files
 		$this->assertEquals( 4, Helper::folder( 'examples/folder1' )->count() );
-		$this->assertEquals( 1, Helper::folder( 'examples/folder2' )->count() );
+		$this->assertEquals( 3, Helper::folder( 'examples/folder2' )->count() );
 		
 	}
 
@@ -58,7 +58,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 	public function testFolderFiles() {
 
 		$folder1 = ['controller.php', 'repository.php', 'views\edit.php', 'views\index.php'];
-		$folder2 = ['request.php'];
+		$folder2 = ['request.php', 'sub1\request.php', 'sub2\request.php'];
 		$this->assertTrue( Helper::folder( 'examples/folder1' )->files() == $folder1 );
 		$this->assertTrue( Helper::folder( 'examples/folder2' )->files() == $folder2 );
 		

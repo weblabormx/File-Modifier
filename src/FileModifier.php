@@ -46,13 +46,15 @@ class FileModifier {
 			$class->actions($this->actions, false);
 			return $class->getNumlines();
 		}
+		if(!$this->exists())
+			return 0;
 		$do = FileRunner::file(self::$file)->actions($this->actions, false);
 		$do = !$do ? 0 : count($do); // If the result is false don't count
 		return $do;
 	}
 
 	function execute($real = true) {
-		if(strlen(self::$file)==0)
+		if(strlen(self::$file)==0 || !$this->exists())
 			return false;
 		return FileRunner::file(self::$file)->actions($this->actions, $real);
 	}
