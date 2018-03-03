@@ -26,36 +26,40 @@ class MasiveModifier {
 
 	public function execute($function) {
 		if(is_array(self::$files) && count(self::$files)>0)
-			$this->executeFiles($function);
+			return $this->executeFiles($function);
 		if(isset(self::$directory) && strlen(self::$directory)>0)
-			$this->executeDirectory($function);
+			return $this->executeDirectory($function);
 		if(is_array(self::$directories) && count(self::$directories)>0)
-			$this->executeDirectories($function);
-		return true;
+			return $this->executeDirectories($function);
 	}
 
 	private function executeEach($function, $file) {
 		$fileModifier = FileModifier::file($file);
 		$function($fileModifier);
-		$fileModifier->execute();
+		$return = $fileModifier->execute();
+		return $return;
 	}
 
 	private function executeFiles($function) {
+		$returns = [];
 		foreach (self::$files as $file) {
-			$this->executeEach($function, $file);
+			$returns[] = $this->executeEach($function, $file);
 		}
+		return $returns;
 	}
 
 	private function executeDirectory($function) {
 		self::$files = Helper::folder(self::$directory)->files(true);
-		$this->executeFiles($function);
+		return $this->executeFiles($function);
 	}
 
 	private function executeDirectories($function) {
+		$returns = [];
 		foreach (self::$directories as $directory) {
 			self::$directory = $directory;
-			$this->executeDirectory($function);
+			$returns[] = $this->executeDirectory($function);
 		}
+		return $returns;
 	}
 }
 ?>
