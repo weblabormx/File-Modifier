@@ -8,13 +8,15 @@ class Folder {
 
 	private $directory;
 
-	public function __construct($directory) {
+	public function __construct($directory) 
+	{
 		$this->directory = $directory;
 	}
 
 	// Inside functions
 
-	private function getIterator($directory = null) {
+	private function getIterator($directory = null) 
+	{
 		if(is_null($directory))
 			$directory = $this->directory;
 		$elements = [];
@@ -27,7 +29,8 @@ class Folder {
 		return $elements;
 	}
 
-	private function getPath($path) {
+	private function getPath($path) 
+	{
 		$path = str_replace($this->directory.'/', '', $path ); 
 		$path = str_replace($this->directory.'\\', '', $path ); 
 		return $path;
@@ -35,7 +38,8 @@ class Folder {
 
 	// Attributes
 
-	public function count() {
+	public function count() 
+	{
 		$folders = 0;
 		foreach( $this->getIterator() as $file) {
 			if($file->isFile())
@@ -44,7 +48,8 @@ class Folder {
 		return $folders;
 	}
 
-	public function total_subfolders() {
+	public function total_subfolders() 
+	{
 		$folders = 0;
 		foreach( $this->getIterator() as $file) {
 			if($file->isDir())
@@ -53,37 +58,57 @@ class Folder {
 		return $folders;
 	}
 
-	public function exists() {
+	public function exists() 
+	{
 		if (file_exists($this->directory) && is_dir($this->directory))
 			return true;
 		return false;
 	}
 
-	public function files($complete_path = false) {
+	public function files($complete_path = false) 
+	{
 		$folders = [];
 		foreach( $this->getIterator() as $file) {
-			if(!$file->isFile())
+			if(!$file->isFile()) {
 				continue;
+			}
 			if($complete_path) {
 				$folders[] = $file->getPathname();
 			} else {
 				$folders[] = $this->getPath($file->getPathname());	
 			}
-			
+		}
+		return $folders;
+	}
+
+	public function directories($complete_path = false) 
+	{
+		$folders = [];
+		foreach( $this->getIterator() as $file) {
+			if(!$file->isDir()) {
+				continue;
+			}
+			if($complete_path) {
+				$folders[] = $file->getPathname();
+			} else {
+				$folders[] = $this->getPath($file->getPathname());	
+			}
 		}
 		return $folders;
 	}
 
 	// Functions
 	
-	public function create() {
+	public function create() 
+	{
 		if($this->exists())
 			return false;
 		mkdir($this->directory, 0777, true);
 		return true;
 	}
 
-	public function copyTo( $destiny ) {
+	public function copyTo( $destiny ) 
+	{
 		if(Helper::folder($destiny)->exists())
 			return false;
 		Helper::folder($destiny)->create();
@@ -98,14 +123,16 @@ class Folder {
 		return true;
 	}
 
-	public function remove() {
+	public function remove() 
+	{
 		if(!$this->exists())
 			return true;
 		exec('rmdir /s /q "'.$this->directory.'\"');
 		return $this->remove(); // Until it is removed
 	}
 
-	public function moveTo( $destiny ) {
+	public function moveTo( $destiny ) 
+	{
 		if(Helper::folder($destiny)->exists())
 			return false;
 		rename($this->directory, $destiny);

@@ -6,13 +6,15 @@ class FileModifier {
 	static private $pointer;
 	private $actions = array();
 
-	static function file($file) {
+	static function file($file) 
+	{
 		self::$file = $file;
 		self::$pointer = new self;
 		return self::$pointer;
 	}
 
-	public function __call($name, $arguments) {
+	public function __call($name, $arguments) 
+	{
 
     	$res 				= array();
 		$res["search"] 		= $arguments[0];
@@ -28,11 +30,13 @@ class FileModifier {
 
     // Basic functions
 
-	function exists() {
+	public function exists() 
+	{
 		return file_exists(self::$file);
 	}
 
-	function create($data) {
+	public function create($data) 
+	{
 		if($fh = fopen(self::$file,'w')){
 		    $stringData = $data;
 		    fwrite($fh, $stringData, 1024);
@@ -40,7 +44,8 @@ class FileModifier {
 		}
 	}
 
-	function count() {
+	public function count() 
+	{
 		if (count($this->actions)==0) { // We are analyzing the file
 			$class = FileRunner::file(self::$file);
 			$class->actions($this->actions, false);
@@ -53,13 +58,15 @@ class FileModifier {
 		return $do;
 	}
 
-	function execute($real = true) {
+	public function execute($real = true) 
+	{
 		if(strlen(self::$file)==0 || !$this->exists())
 			return false;
 		return FileRunner::file(self::$file)->actions($this->actions, $real);
 	}
 
-	function first($real = true) {
+	public function first($real = true) 
+	{
 		$objects = $this->execute($real);
 		if ($objects) {
 			foreach ($objects as $object) {
@@ -70,7 +77,8 @@ class FileModifier {
 	}
 
 	// General functions
-	function removeLinesWhere($start_keyword, $finish_keyword) {
+	public function removeLinesWhere($start_keyword, $finish_keyword) 
+	{
 		$start = FileModifier::file(self::$file)->find($start_keyword)->first();
 		if($start == false)
 			return self::$pointer;
@@ -82,7 +90,8 @@ class FileModifier {
 		return $this->removeLinesBetweenLines($start, $finish);
 	}
 
-	function removeLinesBetweenLines($start, $finish) {
+	public function removeLinesBetweenLines($start, $finish) 
+	{
 		if($finish <= $start || !is_numeric($start) || !is_numeric($finish))
 			return self::$pointer;
 		$FileModifier = FileModifier::file(self::$file);
@@ -92,22 +101,25 @@ class FileModifier {
 		return $FileModifier;
 	}
 
-	function addAtTheEnd($str) {
+	public function addAtTheEnd($str) 
+	{
 		$last_line = FileModifier::file(self::$file)->count();
 		$FileModifier = FileModifier::file(self::$file)
 			->addAfterLineByLineNoN($last_line, "\n".$str);
 		return $FileModifier;
 	}
 
-	function removeFunction($function) {
+	public function removeFunction($function) 
+	{
 		$function = FileModifier::file(self::$file)->getFunctionLines($function);
 		if(!is_array($function))
 			return self::$pointer;
 		return $this->removeLinesBetweenLines($function['starts'], $function['finish']);
 	}
 
-	// Advance functions
-	function getFunctionLines($function, $array = array()) {
+	// Advanced functions
+	public function getFunctionLines($function, $array = array()) 
+	{
 		$search = "function $function";
 		$res = $this->find($search, false, $array)->first();
 		if ($res!==false) {
@@ -127,7 +139,8 @@ class FileModifier {
 		return false;
 	}
 
-	function getFunctionInit($function, $array = array()) {
+	public function getFunctionInit($function, $array = array()) 
+	{
 		$search = array("function $function(","function $function (");
 		$res = $this->find($search, false, $array)->execute();
 		if ($res==false) {
@@ -202,7 +215,8 @@ class FileModifier {
 		return false;
 	}
 
-	function getIfLines($if, $array = array()) {
+	public function getIfLines($if, $array = array()) 
+	{
 		$search = array($if);
 		$res = $this->find($search, false, $array)->first();
 		if ($res==false) {

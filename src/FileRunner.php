@@ -1,8 +1,8 @@
 <?php
 namespace WeblaborMX\FileModifier;
 
-class FileRunner {
-
+class FileRunner 
+{
 	static private $file;
 	private $res = array();
 	private $numline = 0;
@@ -10,12 +10,14 @@ class FileRunner {
 	private $actions;
 	private $pos;
 
-	static function file($file) {
+	static function file($file) 
+	{
 		self::$file = $file;
 		return new self;
 	}
 
-	function actions($actions, $real) {
+	public function actions($actions, $real) 
+	{
 		$this->actions = $actions;
 		$this->real = $real;
 		$archivo = self::$file;
@@ -39,7 +41,8 @@ class FileRunner {
 		return false;
 	}
 
-	function line($line) {
+	public function line($line) 
+	{
 		$oldLine = $line;
 
 		foreach ($this->actions as $action) {
@@ -87,7 +90,8 @@ class FileRunner {
 		return $line;
 	}
 
-	function getNumlines() {
+	public function getNumlines() 
+	{
 		return $this->numline;
 	}
 }
