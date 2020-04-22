@@ -26,6 +26,7 @@ $folder->count();             // Total files in folder (Int    )
 $folder->total_subfolders();  // Total subfolders (Int)
 $folder->exists();            // Check if exists (Boolean)
 $folder->files();             // List of files inside (Array)
+$folder->directories();       // List of directories inside (Array)
 ```
 
 ### Functions
